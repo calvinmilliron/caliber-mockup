@@ -1,0 +1,47 @@
+<div class="animated fadeIn" id="candidate-assessment-summary-container" *ngIf="this.screening.finished">
+  <h1>Screening Summary</h1>
+  <div class="form-group col-md-6">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" value="Jimmy" disabled>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="batch">Topics</label>
+    <input type="text" class="form-control" id="batch" value="Java" disabled>
+  </div>
+
+  <div class="questions">
+    <div class="form-group row questions-row">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Questions Asked</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="24">
+      </div>
+    </div>
+    <div class="form-group row questions-row">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Category Points</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="colFormLabel" placeholder="30">
+      </div>
+    </div>
+    <div class="form-group row questions-row">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Cumulative Weighted Score:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="85%">
+      </div>
+    </div>
+    <div class="soft-skills">
+      <h2>Soft Skills Assessment</h2>
+      <div id="soft-skills-btns">
+        <button class="btn btn-primary" type="submit">Pass</button>
+        <button class="btn btn-primary" type="submit">Fail</button>
+      </div>
+    </div>
+
+
+    <div class="form-group" id="comments">
+      <label for="final-comments-textarea">Final Notes & Comments</label>
+      <textarea class="form-control" id="final-comments-textarea" rows="3" placeholder="Optional"></textarea>
+    </div>
+    <button class="btn btn-primary" id="complete" type="submit" (click)="onSubmit()">Complete Screening</button>
+  </div>
+
+</div>

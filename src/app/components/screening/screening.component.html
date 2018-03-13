@@ -1,0 +1,66 @@
+<div class="animated fadeIn" id="screening-container" *ngIf="!finished">
+  <h1>Screening Form</h1>
+  <div id="configure-screening-container" *ngIf="!areSkillsConfirmed">
+    <div id="skills-checkbox">
+        <h2>Skills</h2>
+        <div class="form-check" *ngFor="let skill of skills; let i = index">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">{{skill}}</label>
+        </div>
+    </div> 
+    <p>Clicking "Confirm Skills" will prevent future edits. 
+      Are you sure these are the candidates confirmed stated skills?</p>
+    <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSkills()">Confirm Skills</button>
+  </div>
+  <div *ngIf="areSkillsConfirmed">
+    <div class="form-group">
+      <label for="formGroupExampleInput">Topic</label>
+      <select class="form-control">
+        <option *ngFor="let topic of topics">{{topic}}</option>
+      </select>
+    </div>
+    <div id="question-bank">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" id="question-col">Question Bank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let question of questions; let answer of answers; let i = index">
+            <tr (click)="selectQuestion(i)" [class.selected]="i == selectedQuestion">
+              <td class="answer">{{questions[i]}}</td>
+            </tr>
+            <tr *ngIf="isQuestionSelected && i == selectedQuestion && !isAnswerSelected">
+              <!-- <h2>Scoring Criteria</h2> -->
+              <table class="table table-hover" id="answers">
+                <thead>
+                  <tr>
+                    <th scope="col" id="score-col">Score</th>
+                    <th scope="col">Answer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let answer of answers; let i = index">
+                    <tr (click)="selectAnswer(i)" [class.selected]="i == selectedAnswer">
+                      <td class="score">{{i+1}}</td>
+                      <td class="answer">{{answer}}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+      <label for="notes-comments-textarea">Notes & Comments</label>
+      <textarea class="form-control" id="notes-comments-textarea" rows="3" placeholder="Optional"></textarea>
+    </div>
+    <button class="btn btn-primary category" type="submit" (click)="nextTopic(); onSubmit()">Next Category</button>
+    <button class="btn btn-primary" type="submit" (click)="toggle()">Finish</button>
+  </div>
+
+</div>
+<app-candidate-assessment-summary></app-candidate-assessment-summary>
