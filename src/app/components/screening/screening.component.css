@@ -57,3 +57,9 @@ h2{
 .selected{
     background: #e0e0eb;
 }
+.pointer{
+    cursor: pointer;
+}
+.question-transition{
+    transition: all .4s ease-in-out;
+}
