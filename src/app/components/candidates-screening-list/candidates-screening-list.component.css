@@ -1,4 +1,4 @@
-#screening-container{
+#candidates-container{
     margin: 5% 10%;
     padding: 5%;
     min-width: 250px;
@@ -14,15 +14,6 @@
 h1{
     background: #f26925;
     color: white;
-}
-.labelz{
-    padding-left: 0px;
-    padding-right: 0px;
-}
-#prompt-btns{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
 }
 #skills-checkbox{
     margin: 15px auto;
@@ -102,4 +93,8 @@ h2{
 #topic, #general-comments{
     padding-left: 12px;
     padding-right: 12px;
+}
+
+h1{
+    margin-bottom: -2px;
 }

@@ -4,7 +4,7 @@
     min-width: 250px;
     border-style: solid;
     border-width: 5px;
-    border-color: #F26925;
+    border-color: #f26925;
 }
 
 .form-group{
@@ -18,8 +18,18 @@
 .questions-row{
     margin-left: 0px;
 }
+h1{
+    background: #f26925;
+    color: white;
+    width: 100%;
+    font-size: 36px;
+}
 h2{
     font-size: 1.15em;
+}
+.labelz{
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .soft-skills{
     margin-bottom: 20px;
@@ -31,7 +41,11 @@ h2{
     grid-gap: 15px;
     
 }
-
+#prompt-btns{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
 #complete, .soft-skills, #comments{
     margin: 15px;
 }
@@ -39,4 +53,9 @@ h2{
 #complete{
     width: 95%;
     margin-right: 15px;
+}
+
+.btn{
+    background: #f26925;
+    border-color: #f26925;
 }

@@ -1,47 +1,110 @@
 <div class="animated fadeIn" id="candidate-assessment-summary-container" *ngIf="this.screening.finished">
-  <h1>Screening Summary</h1>
-  <div class="form-group col-md-6">
+  <h1 class="btn">Screening Summary</h1>
+  <div class="form-group col-md-6 labelz">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" value="Jimmy" disabled>
   </div>
-  <div class="form-group col-md-6">
-    <label for="batch">Topics</label>
-    <input type="text" class="form-control" id="batch" value="Java" disabled>
+  <div class="form-group col-md-6 labelz">
+    <label for="track">Track</label>
+    <input type="text" class="form-control" id="track" value="Programming" disabled>
+  </div>
+  <div id="topics">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" id="question-col">Topics</th>
+        </tr>
+      </thead>
+      <tbody class="question-transition">
+        <ng-container *ngFor="let topic of screening.topics;  let i = index">
+          <tr (click)="screening.selectQuestion(i)" [class.selected]="i == screening.selectedQuestion" class="pointer">
+            <td class="question">{{topic}} | 30/40 = 75%</td>
+          </tr>
+          <tr *ngIf="screening.isQuestionSelected && i == screening.selectedQuestion && !screening.isAnswerSelected" class="animated fadeIn">
+            <!-- <h2>Scoring Criteria</h2> -->
+            <table class="table table-hover" id="answers">
+              <thead>
+                <tr>
+                  <th scope="col" id="score-col">Question</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let question of screening.questions; let i = index">
+                  <tr (click)="screening.selectAnswer(i)" class="pointer">
+                    <td class="answer">{{question}} | Score = 4/5</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
   </div>
 
   <div class="questions">
     <div class="form-group row questions-row">
       <label for="colFormLabel" class="col-sm-2 col-form-label">Questions Asked</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="24">
+        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="24" disabled>
       </div>
     </div>
     <div class="form-group row questions-row">
       <label for="colFormLabel" class="col-sm-2 col-form-label">Category Points</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="colFormLabel" placeholder="30">
+        <input type="text" class="form-control" id="colFormLabel" placeholder="30" disabled>
       </div>
     </div>
     <div class="form-group row questions-row">
       <label for="colFormLabel" class="col-sm-2 col-form-label">Cumulative Weighted Score:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="85%">
+        <input type="text" class="form-control questions-input" id="colFormLabel" placeholder="85%" disabled>
       </div>
     </div>
-    <div class="soft-skills">
-      <h2>Soft Skills Assessment</h2>
+    <div class="soft-skills" *ngIf="!pass && !fail && !prompt && !showViolationForm">
+      <h2 class="text-center">Soft Skills Assessment</h2>
       <div id="soft-skills-btns">
-        <button class="btn btn-primary" type="submit">Pass</button>
-        <button class="btn btn-primary" type="submit">Fail</button>
+        <button class="btn btn-primary" type="submit" (click)="toggleViolationForm('N')">Pass</button>
+        <button class="btn btn-primary" type="submit" (click)="toggleViolationForm('Y')">Fail</button>
+      </div>
+    </div>
+    <div *ngIf="showViolationForm">
+      <h2 class="h5 mb-3 font-weight-normal">Which soft skills were violated?</h2>
+      <div id="skills-checkbox">
+        <div class="form-check skill" *ngFor="let violation of violations; let i = index">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">{{violation}}</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="notes-comments-textarea">Soft Skills Comments</label>
+        <textarea class="form-control" id="notes-comments-textarea" rows="3" placeholder="Optional"></textarea>
+      </div>
+      <div id="soft-skills-btns">
+        <button class="btn btn-primary" type="submit" (click)="togglePrompt('Y')">Done</button>
+        <button class="btn btn-primary" type="submit" (click)="togglePrompt('N')">Cancel</button>
+      </div>
+    </div>
+    <div *ngIf="(pass || fail) && prompt && !showViolationForm && !softSkillsConfirmed">
+      <div class="text-center">
+        <p>You chose "CHOICE"...</p>
+        <p>Are you sure?</p>
+        <p>Click
+          <strong>Yes</strong> or
+          <strong>No</strong> to confirm</p>
+      </div>
+      <div id="prompt-btns">
+        <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSoftSkills('Yes')">Yes</button>
+        <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSoftSkills('No')">No</button>
       </div>
     </div>
 
-
-    <div class="form-group" id="comments">
+    <div class="form-group" id="comments" *ngIf="!prompt && softSkillsConfirmed">
       <label for="final-comments-textarea">Final Notes & Comments</label>
       <textarea class="form-control" id="final-comments-textarea" rows="3" placeholder="Optional"></textarea>
+      <button class="btn btn-primary" id="complete" type="submit" routerLink="/candidates">Complete Screening</button>
     </div>
-    <button class="btn btn-primary" id="complete" type="submit" (click)="onSubmit()">Complete Screening</button>
+
   </div>
 
 </div>

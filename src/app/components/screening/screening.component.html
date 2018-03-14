@@ -1,18 +1,43 @@
-<div class="animated fadeIn" id="screening-container" *ngIf="!finished">
-  <h1>Screening Form</h1>
-  <div id="configure-screening-container" *ngIf="!areSkillsConfirmed">
-    <h2 class="text-center">Choose Skills</h2>
-    <div id="skills-checkbox">
-        <div class="form-check" *ngFor="let skill of skills; let i = index">
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          <label class="form-check-label" for="defaultCheck1">{{skill}}</label>
-        </div>
-    </div> 
-    <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSkills()">Done</button>
+<div class="animated fadeIn custom-container" id="screening-container" *ngIf="!finished">
+  <h1 class="btn">Screening Form</h1>
+  <div class="form-group col-md-6 labelz">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" value="Jimmy" disabled>
   </div>
-  <div *ngIf="areSkillsConfirmed">
+  <div class="form-group col-md-6 labelz">
+    <label for="track">Track</label>
+    <input type="text" class="form-control" id="track" value="Programming" disabled>
+  </div>
+  <div id="configure-screening-container" *ngIf="!skillsSelected">
+    <h2 class="text-center h5 mb-3 font-weight-normal">Choose Skills</h2>
+    <div id="skills-checkbox">
+      <div class="form-check skill" *ngFor="let skill of skills; let i = index">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">{{skill}}</label>
+      </div>
+    </div>
+    <div id="prompt-btns">
+      <button class="btn btn-primary" id="complete" type="submit" (click)="confirmPrompt()">Done</button>
+      <button class="btn btn-primary" id="complete" routerLink="/candidates">Back</button>
+    </div>
+
+  </div>
+  <div *ngIf="skillsSelected && !areSkillsConfirmed">
+    <div class="text-center">
+      <h2 class="h5 mb-3 font-weight-normal">You have selected</h2>
+      <p>Java, Spring</p>
+      <p>Is this your final answer?</p>
+    </div>
+    <div id="prompt-btns">
+      <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSkills('Yes')">Yes</button>
+      <button class="btn btn-primary" id="complete" type="submit" (click)="confirmSkills('No')">No</button>
+    </div>
+
+
+  </div>
+  <div *ngIf="areSkillsConfirmed && !assessmentCompleted">
     <div class="form-group">
-      <label for="formGroupExampleInput">Topic</label>
+      <label for="formGroupExampleInput" class="font-weight-bold" id="topic">Topic</label>
       <select class="form-control">
         <option *ngFor="let topic of topics">{{topic}}</option>
       </select>
@@ -29,7 +54,7 @@
             <tr (click)="selectQuestion(i)" [class.selected]="i == selectedQuestion" class="pointer">
               <td class="question">{{questions[i]}}</td>
             </tr>
-            <tr *ngIf="isQuestionSelected && i == selectedQuestion && !isAnswerSelected" >
+            <tr *ngIf="isQuestionSelected && i == selectedQuestion && !isAnswerSelected" class="animated fadeIn">
               <!-- <h2>Scoring Criteria</h2> -->
               <table class="table table-hover" id="answers">
                 <thead>
@@ -40,7 +65,7 @@
                 </thead>
                 <tbody>
                   <ng-container *ngFor="let answer of answers; let i = index">
-                    <tr (click)="selectAnswer(i)" [class.selected]="i == selectedAnswer" class="pointer" >
+                    <tr (click)="selectAnswer(i)" [class.selected]="i == selectedAnswer" class="pointer">
                       <td class="score">{{i+1}}</td>
                       <td class="answer">{{answer}}</td>
                     </tr>
@@ -48,8 +73,8 @@
                   <tr>
                     <td colspan="2">
                       <div class="form-group">
-                          <label for="notes-comments-textarea">Notes & Comments</label>
-                          <textarea class="form-control" id="notes-comments-textarea" rows="3" placeholder="Optional"></textarea>
+                        <label for="notes-comments-textarea">Notes & Comments</label>
+                        <textarea class="form-control" id="notes-comments-textarea" rows="3" placeholder="Optional"></textarea>
                       </div>
                     </td>
                   </tr>
@@ -61,10 +86,9 @@
       </table>
     </div>
     <div class="form-group">
-      <label for="notes-comments-textarea">Notes & Comments</label>
+      <label for="notes-comments-textarea" class="font-weight-bold" id="general-comments">General Comments</label>
       <textarea class="form-control" id="notes-comments-textarea" rows="3" placeholder="Optional"></textarea>
     </div>
-    <button class="btn btn-primary category" type="submit" (click)="nextTopic(); onSubmit()">Next Category</button>
     <button class="btn btn-primary" type="submit" (click)="toggle()">Finish</button>
   </div>
 

@@ -8,7 +8,7 @@ import { Component, OnInit } from "@angular/core";
 export class ScreeningComponent implements OnInit {
   // batches: string[] = ["Programming", "Example Business Category", "Example .NET Category", "Example Pega Category"];
   
-  skills: string[] = ["Java", "C++", "C#", "Spring", "Threads"];
+  skills: string[] = ["Java", "C++", "C#", "Spring",  "HTML", "CSS", "JavaScript", "SQL"];
   answers: string[] = [
     "No answer provided",
     "Referenced term(s), no definition(s) provided",
@@ -17,6 +17,7 @@ export class ScreeningComponent implements OnInit {
     `Best - Example: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat corporis tenetur 
     delectus ullam doloribus veritatis distinctio libero numquam officia aliquid?`
   ];
+  skillsSelected = false;
   areSkillsConfirmed = false;
   currentTopic: string;
   topics: string[] = ["Core Java", "Advanced Java", "Web", "SQL"];
@@ -44,8 +45,16 @@ export class ScreeningComponent implements OnInit {
 
   ngOnInit() {}
 
-  confirmSkills(){
-    this.areSkillsConfirmed = true;
+  confirmPrompt(){
+    this.skillsSelected = true;
+  }
+  confirmSkills(yesNo){
+    if(yesNo == 'Yes'){
+      this.areSkillsConfirmed = true;
+    }
+      
+    else
+      this.skillsSelected = false;
   }
 
   selectQuestion(j) {

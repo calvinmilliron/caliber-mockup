@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { ScreeningComponent } from './components/screening/screening.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { CandidateAssessmentSummaryComponent } from './components/candidate-assessment-summary/candidate-assessment-summary.component';
+import { CandidatesScreeningListComponent } from './components/candidates-screening-list/candidates-screening-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ScreeningComponent,
-    CandidateAssessmentSummaryComponent
+    CandidateAssessmentSummaryComponent,
+    CandidatesScreeningListComponent
   ],
   imports: [
     BrowserModule,
